@@ -1,0 +1,94 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: serif;
+  padding: 2rem;
+  background: #fefdfb;
+  color: #2d2d2d;
+}
+
+main {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.context {
+  max-height: 150px;
+  overflow-y: auto;
+  transition:
+    max-height 0.3s ease,
+    padding 0.3s ease;
+  padding: 1rem 0;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 2rem,
+    black calc(100% - 2rem),
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 2rem,
+    black calc(100% - 2rem),
+    transparent
+  );
+}
+
+.context.hidden {
+  max-height: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.haiku {
+  padding: 1rem 0;
+  font-size: 3rem;
+}
+
+.meta {
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+.meta img {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  object-fit: cover;
+  padding: 0.3rem;
+}
+
+.session-number,
+.period {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+
+button {
+  padding: 0.5rem;
+}
+
+.voting {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.voting button {
+  margin-top: 1rem;
+  width: 8rem;
+}
+
+.change-haiku {
+  width: 16.5rem;
+  display: block;
+  margin: 0.5rem auto;
+}
