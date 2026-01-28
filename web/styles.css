@@ -11,13 +11,31 @@ body {
   color: #2d2d2d;
 }
 
+#fade-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fefdfb;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 9999;
+}
+
+#fade-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 main {
   max-width: 600px;
   margin: 0 auto;
 }
 
 .context {
-  max-height: 150px;
+  max-height: 100px;
   overflow-y: auto;
   transition:
     max-height 0.3s ease,
@@ -47,15 +65,16 @@ main {
 
 .haiku {
   padding: 1rem 0;
-  font-size: 3rem;
+  white-space: nowrap;
 }
 
 .meta {
-  padding: 1rem 0;
+  padding: 2rem 0;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   align-items: flex-end;
+  text-align: right;
 }
 
 .meta img {
@@ -84,11 +103,11 @@ button {
 
 .voting button {
   margin-top: 1rem;
-  width: 8rem;
+  width: 9rem;
 }
 
 .change-haiku {
-  width: 16.5rem;
+  width: 18.5rem;
   display: block;
   margin: 0.5rem auto;
 }

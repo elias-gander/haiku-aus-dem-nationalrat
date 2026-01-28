@@ -12,6 +12,7 @@ const colormap = {
   "Ohne Klub": "#00000000",
 };
 const haiku = await (await fetch("../haiku.json")).json();
+const haikuEl = document.getElementById("haiku")
 
 window.App = reactive({
   currentHaiku: null,
@@ -45,15 +46,48 @@ window.App = reactive({
     const el = document.getElementById("context-before");
     el.scrollTop = el.scrollHeight;
   },
-  loadRandomHaiku() {
+  async loadRandomHaiku() {
+    const overlay = document.getElementById("fade-overlay");
+    overlay.classList.add("show");
+    await new Promise(r => setTimeout(r, 250));
     const randomIndex = Math.floor(Math.random() * haiku.length);
     this.currentHaiku = haiku[randomIndex];
     this.isContextPresented = false;
     this.votes = { up: 0, down: 0 };
     this.hasVotedUp = false;
     this.hasVotedDown = false;
-  },
+    const personImage = document.getElementById("person-image");
+    await new Promise(resolve => {
+      if (personImage.complete && personImage.naturalWidth !== 0) {
+        resolve();
+      } else {
+        personImage.onload = personImage.onerror = resolve;
+      }
+    });
+    overlay.classList.remove("show");
+  }
 });
 
-window.App.loadRandomHaiku();
+await window.App.loadRandomHaiku();
+new ResizeObserver(updateHaikuFontSize).observe(haikuEl);
+new MutationObserver(updateHaikuFontSize).observe(haikuEl, {childList: true, characterData: true, subtree: true});
+
+function updateHaikuFontSize() {
+  const rootFontSizePx = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const maxFontSizeRem = 3;
+  const maxFontSizePx = maxFontSizeRem * rootFontSizePx;
+  haikuEl.style.fontSize = maxFontSizeRem + 'rem';
+  const style = getComputedStyle(haikuEl);
+  const paddingLeft = parseFloat(style.paddingLeft);
+  const paddingRight = parseFloat(style.paddingRight);
+  const availableWidth = haikuEl.clientWidth - paddingLeft - paddingRight;
+  const longestLine = Math.max(
+    ...[...haikuEl.children].map(l => l.scrollWidth)
+  );
+  const scale = availableWidth / longestLine;
+  if (scale < 1) {
+    haikuEl.style.fontSize = (maxFontSizePx * scale) / rootFontSizePx + 'rem';
+  }
+}
+
 createApp(window.App).mount();

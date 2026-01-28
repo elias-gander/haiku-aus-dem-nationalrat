@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body v-scope="App">
+    <div id="fade-overlay"></div>
     <main>
       <div
         class="context"
@@ -15,7 +16,7 @@
       >
         {{ App.currentHaiku.contextBefore }}
       </div>
-      <div class="haiku">
+      <div class="haiku" id="haiku">
         <div class="line">{{ App.currentHaiku.lines[0] }}</div>
         <div class="line">{{ App.currentHaiku.lines[1] }}</div>
         <div class="line">{{ App.currentHaiku.lines[2] }}</div>
@@ -25,6 +26,7 @@
       </div>
       <div class="meta">
         <img
+          id="person-image"
           :src="App.currentHaiku.imageUrl"
           :style="{ background: App.conicGradient }"
         />
@@ -47,7 +49,7 @@
           >)
         </div>
         <button class="context-toggle" @click="toggleIsContextPresented()">
-          {{ App.isContextPresented ? "✕" : "⯈" }} Kontext {{
+          {{ App.isContextPresented ? "✕" : "≡" }} Kontext {{
           App.isContextPresented ? "verbergen" : "anzeigen" }}
         </button>
       </div>
