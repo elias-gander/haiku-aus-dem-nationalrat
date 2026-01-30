@@ -8,73 +8,104 @@
   </head>
   <body v-scope="App">
     <div id="fade-overlay"></div>
-    <main>
-      <div
-        class="context"
-        id="context-before"
-        v-bind:class="{ hidden: !App.isContextPresented }"
-      >
-        {{ App.currentHaiku.contextBefore }}
-      </div>
-      <div class="haiku" id="haiku">
-        <div class="line">{{ App.currentHaiku.lines[0] }}</div>
-        <div class="line">{{ App.currentHaiku.lines[1] }}</div>
-        <div class="line">{{ App.currentHaiku.lines[2] }}</div>
-      </div>
-      <div class="context" v-bind:class="{ hidden: !App.isContextPresented }">
-        {{ App.currentHaiku.contextAfter }}
-      </div>
-      <div class="meta">
-        <img
-          id="person-image"
-          :src="App.currentHaiku.imageUrl"
-          :style="{ background: App.conicGradient }"
-        />
-        <div>
-          <span class="name">{{ App.currentHaiku.name }}</span>
-          <span class="party">({{ App.parties }})</span>
+    <div id="content" v-cloak>
+      <main>
+        <div
+          class="context"
+          id="context-before"
+          v-bind:class="{ hidden: !App.isContextPresented }"
+        >
+          {{ App.currentHaiku.context_before }}
         </div>
-        <div>
-          <span class="date">am {{ App.date }}</span>
-          (<span
-            class="period"
-            :title="`${App.currentHaiku.period }. Gesetzgebungsperiode`"
-            >{{ App.currentHaiku.periodRoman }}. GP</span
-          >,
-          <span
-            class="session-number"
-            :title="`${App.currentHaiku.sessionNumber}. Nationalratssitzung`"
+        <div class="haiku" id="haiku">
+          <div class="line">{{ App.currentHaiku.line1 }}</div>
+          <div class="line">{{ App.currentHaiku.line2 }}</div>
+          <div class="line">{{ App.currentHaiku.line3 }}</div>
+        </div>
+        <div class="context" v-bind:class="{ hidden: !App.isContextPresented }">
+          {{ App.currentHaiku.context_after }}
+        </div>
+        <div class="meta">
+          <img
+            id="person-image"
+            :src="App.currentHaiku.image_url"
+            :style="{ background: App.conicGradient }"
+          />
+          <div>
+            <a
+              class="name"
+              :href="`leaderboard.html?personId=${App.currentHaiku.person_id}`"
+              >{{ App.currentHaiku.person_name }}</a
+            >
+            <span class="party">({{ App.parties }})</span>
+          </div>
+          <div>
+            <span class="date">am {{ App.date }}</span>
+            (<span
+              class="period"
+              :title="`${App.currentHaiku.period }. Gesetzgebungsperiode`"
+              >{{ App.currentHaiku.period_roman }}. GP</span
+            >,
+            <span
+              class="session-number"
+              :title="`${App.currentHaiku.session}. Nationalratssitzung`"
+            >
+              {{ App.currentHaiku.session }}/NRSITZ</span
+            >)
+          </div>
+          <button class="context-toggle" @click="toggleIsContextPresented()">
+            {{ App.isContextPresented ? "✕" : "≡" }} Kontext {{
+            App.isContextPresented ? "verbergen" : "anzeigen" }}
+          </button>
+        </div>
+
+        <div class="voting">
+          <button
+            class="vote-btn"
+            @click="App.vote(1)"
+            :disabled="App.currentHaiku.has_voted_up"
           >
-            {{ App.currentHaiku.sessionNumber }}/NRSITZ</span
-          >)
+            ▲ Gutes Haiku
+          </button>
+          <button
+            class="vote-btn"
+            @click="App.vote(-1)"
+            :disabled="App.currentHaiku.has_voted_down"
+          >
+            ▼ Schlechtes Haiku
+          </button>
         </div>
-        <button class="context-toggle" @click="toggleIsContextPresented()">
-          {{ App.isContextPresented ? "✕" : "≡" }} Kontext {{
-          App.isContextPresented ? "verbergen" : "anzeigen" }}
-        </button>
-      </div>
-
-      <div class="voting">
-        <button class="vote-btn" @click="App.voteUp()">▲ Gutes Haiku</button>
-        <button class="vote-btn" @click="App.voteDown()">
-          ▼ Schlechtes Haiku
-        </button>
-      </div>
-      <div
-        class="results"
-        v-bind:class="{ hidden: App.hasVotedUp || App.hasVotedDown }"
-      >
-        <div class="bar-container">
-          <div class="bar-fill"></div>
-          <div class="bar-percentage"></div>
+        <div
+          class="score"
+          v-bind:class="{ hidden: !(App.currentHaiku.has_voted_up || App.currentHaiku.has_voted_down) }"
+        >
+          <div
+            class="score-bars"
+            :style="`grid-template-columns: ${App.votesPercentage.up}% ${App.votesPercentage.down}%`"
+          >
+            <div class="upvotes-score-bar"></div>
+            <div class="downvotes-score-bar"></div>
+          </div>
+          <div class="score-counts">
+            <div class="upvotes-score-count">
+              {{ App.currentHaiku.upvotes }} ▲
+            </div>
+            <div class="downvotes-score-count">
+              {{ App.currentHaiku.downvotes }} ▼
+            </div>
+          </div>
         </div>
-        <div class="vote-count"></div>
-      </div>
 
-      <button class="change-haiku" @click="App.loadRandomHaiku()">
-        ⟳ Anderes Haiku
-      </button>
-    </main>
-    <script type="module" src="scripts.js"></script>
+        <button class="change-haiku" @click="App.loadHaiku()">
+          ⟳ Anderes Haiku
+        </button>
+      </main>
+      <nav aria-label="Primary">
+        Ein Haiku
+        <a href="leaderboard.html">Leaderboard</a>
+        <a href="faq.html">FAQ</a>
+      </nav>
+    </div>
+    <script type="module" src="haiku.js"></script>
   </body>
 </html>

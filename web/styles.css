@@ -4,6 +4,14 @@
   box-sizing: border-box;
 }
 
+[v-cloak] {
+  display: none;
+}
+
+a {
+  color: #4f6d7a;
+}
+
 body {
   font-family: serif;
   padding: 2rem;
@@ -20,7 +28,7 @@ body {
   background-color: #fefdfb;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.2s ease;
   z-index: 9999;
 }
 
@@ -29,7 +37,7 @@ body {
   pointer-events: auto;
 }
 
-main {
+#content {
   max-width: 600px;
   margin: 0 auto;
 }
@@ -106,8 +114,112 @@ button {
   width: 9rem;
 }
 
+.score {
+  max-width: 18.5rem;
+  margin: 0 auto;
+  margin-top: 0.5rem;
+  overflow: hidden;
+  transition:
+    height 0.3s ease,
+    margin 0.3s ease;
+}
+
+.score.hidden {
+  height: 0px;
+  margin: 0;
+}
+
+.score-bars {
+  display: grid;
+  height: 0.5rem;
+  transition: grid-template-columns 0.3s ease;
+  border-radius: 0.15rem;
+  overflow: hidden;
+}
+.upvotes-score-bar {
+  background: #387e2a;
+}
+.downvotes-score-bar {
+  background: #bf4040;
+}
+
+.score-counts {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+}
+.upvotes-score-count {
+  color: #387e2a;
+}
+.downvotes-score-count {
+  color: #bf4040;
+}
+
 .change-haiku {
   width: 18.5rem;
+  max-width: 100%;
   display: block;
   margin: 0.5rem auto;
+}
+
+nav {
+  margin-top: 3rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+nav a {
+  white-space: nowrap;
+}
+
+.mode-buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.mode-buttons-container button {
+  width: 9rem;
+}
+
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-top: 2rem;
+}
+.table {
+  min-width: 600px;
+  max-height: 60vh;
+  border-collapse: collapse;
+  padding: 0 0.5rem;
+}
+.header,
+.row {
+  display: grid;
+  align-items: center;
+}
+.header {
+  font-weight: bold;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.5rem 0;
+}
+.sortable-header {
+  cursor: pointer;
+  user-select: none;
+}
+.row {
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+.row:last-child {
+  border-bottom: none;
+}
+.cell {
+  padding: 0.25rem 0.5rem;
+}
+.sortable-header,
+.cell.numeric {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
 }

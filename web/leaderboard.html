@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Haiku aus dem Nationalrat</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body v-scope="App">
+    <div id="fade-overlay"></div>
+    <div id="content" v-cloak>
+      <main>
+        <div class="mode-buttons-container">
+          <button @click="App.switchMode()" :disabled="App.isPersonenMode">
+            Personen
+          </button>
+          <button @click="App.switchMode()" :disabled="!App.isPersonenMode">
+            Haiku
+          </button>
+        </div>
+
+        <div class="table-container">
+          <div class="table">
+            <div
+              class="header"
+              v-if="App.isPersonenMode"
+              style="grid-template-columns: 1fr 6rem 6rem 6rem"
+            >
+              <div>Name</div>
+              <div class="sortable-header" @click="App.sortBy('haiku_count')">
+                # Haiku {{ App.getColumnHeaderSortSymbol("haiku_count") }}
+              </div>
+              <div class="sortable-header" @click="App.sortBy('upvotes')">
+                ▲ gesamt {{ App.getColumnHeaderSortSymbol("upvotes") }}
+              </div>
+              <div class="sortable-header" @click="App.sortBy('downvotes')">
+                ▼ gesamt {{ App.getColumnHeaderSortSymbol("downvotes") }}
+              </div>
+            </div>
+            <div
+              class="header"
+              v-if="!App.isPersonenMode"
+              style="grid-template-columns: 2fr 1fr 6rem 6rem"
+            >
+              <div>Haiku</div>
+              <div>Person</div>
+              <div class="sortable-header" @click="App.sortBy('upvotes')">
+                ▲ {{ App.getColumnHeaderSortSymbol("upvotes") }}
+              </div>
+              <div class="sortable-header" @click="App.sortBy('downvotes')">
+                ▼ {{ App.getColumnHeaderSortSymbol("downvotes") }}
+              </div>
+            </div>
+            <div v-if="App.isPersonenMode">
+              <div
+                class="row"
+                v-for="row in App.rows"
+                style="grid-template-columns: 1fr 6rem 6rem 6rem"
+              >
+                <div class="cell">
+                  <a :href="`?personId=${row.person_id}`"
+                    >{{ row.person_name }}</a
+                  >
+                </div>
+                <div class="cell numeric">{{ row.haiku_count }}</div>
+                <div class="cell numeric">{{ row.upvotes }}</div>
+                <div class="cell numeric">{{ row.downvotes }}</div>
+              </div>
+            </div>
+            <div v-if="!App.isPersonenMode">
+              <div
+                class="row"
+                v-for="row in App.rows"
+                style="grid-template-columns: 2fr 1fr 6rem 6rem"
+              >
+                <div class="cell">
+                  <a :href="`/?haikuId=${row.id}`">
+                    {{ row.line1 }}<br />{{ row.line2 }}<br />{{ row.line3 }}</a
+                  >
+                </div>
+                <div class="cell">
+                  <a :href="`?personId=${row.person_id}`"
+                    >{{ row.person_name }}</a
+                  >
+                </div>
+                <div class="cell numeric">{{ row.upvotes }}</div>
+                <div class="cell numeric">{{ row.downvotes }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <nav aria-label="Primary">
+        <a href="index.html">Ein Haiku</a>
+        Leaderboard
+        <a href="faq.html">FAQ</a>
+      </nav>
+    </div>
+    <script type="module" src="leaderboard.js"></script>
+  </body>
+</html>
