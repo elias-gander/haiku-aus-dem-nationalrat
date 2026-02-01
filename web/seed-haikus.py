@@ -1,10 +1,11 @@
 import json
+import os
 from supabase import create_client
 
-SUPABASE_URL = "https://ngbqkyogyfuicsfzccmo.supabase.co"
-SUPABASE_SERVICE_KEY = "sb_publishable_btbtmwera16wp29oidFEug_HcSGMo3Q"
+with open("env.json", "r") as f:
+    config = json.load(f)
 
-supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
+supabase = create_client(config["SUPABASE_URL"], config["SUPABASE_KEY"])
 
 with open("haikus.json", "r", encoding="utf-8") as f:
     haikus = json.load(f)

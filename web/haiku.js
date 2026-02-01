@@ -12,11 +12,9 @@ const colormap = {
   PILZ: "#cdcdcd",
   "Ohne Klub": "#00000000",
 };
+const config = await (await fetch("env.json")).json();
+const supabase = createClient(config.SUPABASE_URL, config.SUPABASE_KEY);
 const haikuEl = document.getElementById("haiku");
-const supabase = createClient(
-  "https://ngbqkyogyfuicsfzccmo.supabase.co",
-  "sb_publishable_btbtmwera16wp29oidFEug_HcSGMo3Q",
-);
 let haikuIdUrlParam = new URLSearchParams(window.location.search).get(
   "haikuId",
 );

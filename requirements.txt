@@ -4,3 +4,4 @@ spacy
 pyphen
 roman
 supabase
+regex

@@ -1,10 +1,8 @@
 import { createApp, reactive } from "https://unpkg.com/petite-vue?module";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const supabase = createClient(
-  "https://ngbqkyogyfuicsfzccmo.supabase.co",
-  "sb_publishable_btbtmwera16wp29oidFEug_HcSGMo3Q",
-);
+const config = await (await fetch("env.json")).json();
+const supabase = createClient(config.SUPABASE_URL, config.SUPABASE_KEY);
 const overlay = document.getElementById("fade-overlay");
 const personIdUrlParam = new URLSearchParams(window.location.search).get(
   "personId",
