@@ -32,6 +32,7 @@ Für den Zeitraum von Dezember 2002 bis heute dankenswerterweise durch [Mario Ze
    - Auf [Supabase](https://supabase.com) einen Account anlegen.
    - Projekt erstellen
    - SQL Statements in `web/db/db-schema.sql` im Supabase Projekt ausführen.
+   - Supabase-URL und -Key in `web/env-template.json` einfügen und umbenennen auf `env.json`.
 
 7. Haiku in Datenbank einspielen:
    - In Supabase die RLS (Row Level Security) Policies für die `haiku` Tabelle abdrehen.
