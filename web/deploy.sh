@@ -28,6 +28,7 @@ file_patterns=(
     "haiku.js"
     "leaderboard.js"
     "styles.css"
+    "env.json"
 )
 
 # Build rsync include/exclude parameters
