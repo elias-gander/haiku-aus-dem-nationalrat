@@ -25,7 +25,7 @@ file_patterns=(
     "index.html"
     "leaderboard.html"
     "faq.html"
-    "haiku.js"
+    "index.js"
     "leaderboard.js"
     "styles.css"
     "env.json"

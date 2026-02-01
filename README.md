@@ -41,4 +41,4 @@ Für den Zeitraum von Dezember 2002 bis heute dankenswerterweise durch [Mario Ze
 
 8. Lokalen Server starten: `python -m http.server -d web`
 
-9. Im Browser zu _http://localhost:8000_ navigieren
+9. Im Browser zu `http://localhost:8000` navigieren
