@@ -110,15 +110,26 @@ window.App = reactive({
 });
 
 await App.loadHaiku();
-new ResizeObserver(updateHaikuFontSize).observe(haikuEl);
-new MutationObserver(updateHaikuFontSize).observe(haikuEl, {
+new ResizeObserver(requestResizeHaikuFont).observe(haikuEl);
+new MutationObserver(requestResizeHaikuFont).observe(haikuEl, {
   childList: true,
   characterData: true,
   subtree: true,
 });
 createApp(window.App).mount();
 
-function updateHaikuFontSize() {
+let isResizeHaikuFontScheduled = false;
+function requestResizeHaikuFont() {
+  if (isResizeHaikuFontScheduled) return;
+  isResizeHaikuFontScheduled = true;
+
+  requestAnimationFrame(() => {
+    isResizeHaikuFontScheduled = false;
+    resizeHaikuFont();
+  });
+}
+
+function resizeHaikuFont() {
   const rootFontSizePx = parseFloat(
     getComputedStyle(document.documentElement).fontSize,
   );
