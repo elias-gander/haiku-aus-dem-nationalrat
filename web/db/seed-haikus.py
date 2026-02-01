@@ -1,8 +1,7 @@
 import json
-import os
 from supabase import create_client
 
-with open("env.json", "r") as f:
+with open("..env.json", "r") as f:
     config = json.load(f)
 
 supabase = create_client(config["SUPABASE_URL"], config["SUPABASE_KEY"])

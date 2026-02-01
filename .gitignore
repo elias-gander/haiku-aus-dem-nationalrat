@@ -1,2 +1,5 @@
+venv
 woswormeileistung
 web/env.json
+supabase
+.mypy_cache
