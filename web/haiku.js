@@ -1,4 +1,4 @@
-import { createApp, reactive } from "https://unpkg.com/petite-vue?module";
+import { createApp, reactive } from "https://esm.sh/petite-vue@0.4.1";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const colormap = {
