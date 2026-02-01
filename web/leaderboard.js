@@ -7,7 +7,6 @@ const overlay = document.getElementById("fade-overlay");
 const personIdUrlParam = new URLSearchParams(window.location.search).get(
   "personId",
 );
-window.history.replaceState({}, document.title, window.location.pathname);
 
 window.App = reactive({
   rows: [],

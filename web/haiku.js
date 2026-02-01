@@ -18,7 +18,6 @@ const haikuEl = document.getElementById("haiku");
 let haikuIdUrlParam = new URLSearchParams(window.location.search).get(
   "haikuId",
 );
-window.history.replaceState({}, document.title, window.location.pathname);
 
 window.App = reactive({
   currentHaiku: null,
@@ -77,6 +76,9 @@ window.App = reactive({
       img.onerror = () => reject();
       img.src = newHaiku.image_url;
     });
+    const url = new URL(window.location.href);
+    url.searchParams.set("haikuId", newHaiku.id);
+    window.history.replaceState({}, "", url);
     this.currentHaiku = newHaiku;
     this.isContextPresented = false;
     overlay.classList.remove("show");
